@@ -16,10 +16,12 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private Transform _inventoryPlaceTransform;
 
     [SerializeField]  public float _mouseSensitivity = 2f;
-    [SerializeField]  public float _maxLookAngle = 50f;
+    [SerializeField]  public float _maxLookAngle = 180f;
     [SerializeField]  private float _walkSpeed = 5f;
     [SerializeField]  private float _maxVelocityChange = 10f;
     [SerializeField]  private float _distance = 5.75f;
+
+    private float pitch = 0.0f;
 
     public void AddInventoryObject(InventoryObject inventoryObject)
     {
@@ -31,10 +33,7 @@ public class PlayerController : MonoBehaviour
     {
         var yaw = transform.localEulerAngles.y + Input.GetAxis("Mouse X") * _mouseSensitivity;
 
-        float pitch = 0;
         pitch -= _mouseSensitivity * Input.GetAxis("Mouse Y");
-        pitch = Mathf.Clamp(pitch, -_maxLookAngle, _maxLookAngle);
-
         transform.localEulerAngles = new Vector3(0, yaw, 0);
         _playerCamera.transform.localEulerAngles = new Vector3(pitch, 0, 0);
 

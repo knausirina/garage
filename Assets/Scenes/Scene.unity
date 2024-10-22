@@ -495,7 +495,7 @@ MonoBehaviour:
   _rigidbody: {fileID: 161580579}
   _inventoryPlaceTransform: {fileID: 1525697009}
   _mouseSensitivity: 2
-  _maxLookAngle: 50
+  _maxLookAngle: 180
   _walkSpeed: 5
   _maxVelocityChange: 10
   _distance: 5.75
@@ -2337,7 +2337,7 @@ Transform:
   m_GameObject: {fileID: 1525697008}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.73, y: -0.8, z: 1.36}
+  m_LocalPosition: {x: 0.4, y: -0.7, z: 1.4}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
