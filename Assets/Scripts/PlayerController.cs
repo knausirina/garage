@@ -23,11 +23,10 @@ public class PlayerController : MonoBehaviour
 
     public void AddInventoryObject(InventoryObject inventoryObject)
     {
-        _inventoryPlaceTransform.position = Vector3.zero;
-        _inventoryPlaceTransform.localPosition = Vector3.zero;
         inventoryObject.transform.parent = _inventoryPlaceTransform;
+        inventoryObject.transform.localPosition = Vector3.zero;
     }
-
+    
     private void Update()
     {
         var yaw = transform.localEulerAngles.y + Input.GetAxis("Mouse X") * _mouseSensitivity;
