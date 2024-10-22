@@ -2,18 +2,19 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Unity.VisualScripting;
 using UnityEngine;
 
 namespace Assets.Scripts
 {
     public class InventoryController : MonoBehaviour
     {
-        public Action<InventoryObject> AddToInventoryAction;
+        public Action<InventoryObject> AddedToInventoryAction;
 
         private List<InventoryObject> _inventoryObjects;
         private List<InventoryObject> _pickedObjects = new List<InventoryObject>();
 
-        private int _capacity = 1;
+        private const int Capacity = 1;
 
         private void Awake()
         {
@@ -34,12 +35,24 @@ namespace Assets.Scripts
 
             _pickedObjects.Add(element);
 
-            AddToInventoryAction?.Invoke(element);
+            AddedToInventoryAction?.Invoke(element);
+        }
+
+        public InventoryObject RemovePicketObject()
+        {
+            if (_pickedObjects.Count == 0)
+            {
+                return null;
+            }
+
+            var element = _pickedObjects.First();
+            _pickedObjects.Remove(element);
+            return element;
         }
 
         public bool IsFull()
         {
-            return _pickedObjects.Count >= _capacity;
+            return _pickedObjects.Count >= Capacity;
         }
     }
 } 

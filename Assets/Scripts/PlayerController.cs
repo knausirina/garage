@@ -42,7 +42,7 @@ public class PlayerController : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.E))
         {
-            TryPickObjects();
+            TryPickObject();
         }
     }
 
@@ -69,7 +69,7 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    private void TryPickObjects()
+    private void TryPickObject()
     {
         var rayCastHit = RayCast();
         if (rayCastHit != null && rayCastHit.Value.transform.gameObject.layer == Layers.Rack)
