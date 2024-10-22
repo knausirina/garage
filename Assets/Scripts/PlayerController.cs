@@ -1,19 +1,29 @@
 using System;
+using System.Runtime.CompilerServices;
 using Assets.Scripts;
 using UnityEngine;
+using static UnityEngine.UI.Image;
 
 
 public class PlayerController : MonoBehaviour
 {
     public Action TouchGagesAction;
+    public Action PickObjectAction;
 
     [SerializeField] private Camera _playerCamera;
     [SerializeField] private Rigidbody _rigidbody;
+    [SerializeField] private Transform _inventoryPlaceTransform;
 
-    [SerializeField]  public const float _mouseSensitivity = 2f;
-    [SerializeField]  public const float _maxLookAngle = 50f;
-    [SerializeField]  private const float _walkSpeed = 5f;
-    [SerializeField]  private const float _maxVelocityChange = 10f;
+    [SerializeField]  public float _mouseSensitivity = 2f;
+    [SerializeField]  public float _maxLookAngle = 50f;
+    [SerializeField]  private float _walkSpeed = 5f;
+    [SerializeField]  private float _maxVelocityChange = 10f;
+    [SerializeField]  private float _distance = 5.75f;
+
+    public void AddInventoryObject(InventoryObject inventoryObject)
+    {
+        inventoryObject.transform.parent = _inventoryPlaceTransform;
+    }
 
     private void Update()
     {
@@ -27,6 +37,11 @@ public class PlayerController : MonoBehaviour
         _playerCamera.transform.localEulerAngles = new Vector3(pitch, 0, 0);
 
         CheckGates();
+
+        if (Input.GetKeyDown(KeyCode.E))
+        {
+            TryPickObjects();
+        }
     }
 
     private void FixedUpdate()
@@ -45,22 +60,36 @@ public class PlayerController : MonoBehaviour
 
     private void CheckGates()
     {
-        Vector3 origin = new Vector3(transform.position.x, transform.position.y - (transform.localScale.y * .5f), transform.position.z);
-        Vector3 direction = transform.TransformDirection(Vector3.forward);
-        float distance = 5.75f;
-
-        if (Physics.Raycast(origin, direction, out RaycastHit hit, distance))
+        var rayCastHit = RayCast();
+        if (rayCastHit != null && rayCastHit.Value.transform.gameObject.layer == Layers.Gate)
         {
-            Debug.DrawRay(origin, direction * distance, Color.red);
-
-            if (hit.transform.gameObject.layer == Layers.Gate)
-            {
                 TouchGagesAction?.Invoke();
-            }
         }
-        else
+    }
+
+    private void TryPickObjects()
+    {
+        var rayCastHit = RayCast();
+        if (rayCastHit != null && rayCastHit.Value.transform.gameObject.layer == Layers.Rack)
         {
-            
+            PickObjectAction?.Invoke();
         }
+    }
+
+    private RaycastHit? RayCast()
+    {
+        var origin = new Vector3(transform.position.x, transform.position.y - (transform.localScale.y * .5f),
+            transform.position.z);
+        var direction = transform.TransformDirection(Vector3.forward);
+
+
+        if (Physics.Raycast(origin, direction, out RaycastHit hit, _distance))
+        {
+            Debug.DrawRay(origin, direction * _distance, Color.red);
+
+            return hit;
+        }
+
+        return null;
     }
 }
