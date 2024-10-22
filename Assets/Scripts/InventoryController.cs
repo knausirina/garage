@@ -13,6 +13,8 @@ namespace Assets.Scripts
         private List<InventoryObject> _inventoryObjects;
         private List<InventoryObject> _pickedObjects = new List<InventoryObject>();
 
+        private int _capacity = 1;
+
         private void Awake()
         {
             _inventoryObjects = GetComponentsInChildren<InventoryObject>().ToList();
@@ -22,12 +24,22 @@ namespace Assets.Scripts
 
         public void Pick()
         {
+            if (IsFull())
+            {
+                return;
+            }
+
             var element =_inventoryObjects.First();
             _inventoryObjects.Remove(element);
 
             _pickedObjects.Add(element);
 
             AddToInventoryAction?.Invoke(element);
+        }
+
+        public bool IsFull()
+        {
+            return _pickedObjects.Count >= _capacity;
         }
     }
 } 

@@ -22,6 +22,8 @@ public class PlayerController : MonoBehaviour
 
     public void AddInventoryObject(InventoryObject inventoryObject)
     {
+        _inventoryPlaceTransform.position = Vector3.zero;
+        _inventoryPlaceTransform.localPosition = Vector3.zero;
         inventoryObject.transform.parent = _inventoryPlaceTransform;
     }
 
@@ -63,7 +65,7 @@ public class PlayerController : MonoBehaviour
         var rayCastHit = RayCast();
         if (rayCastHit != null && rayCastHit.Value.transform.gameObject.layer == Layers.Gate)
         {
-                TouchGagesAction?.Invoke();
+            TouchGagesAction?.Invoke();
         }
     }
 
