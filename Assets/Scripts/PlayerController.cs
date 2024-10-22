@@ -9,6 +9,7 @@ public class PlayerController : MonoBehaviour
 {
     public Action TouchGagesAction;
     public Action PickObjectAction;
+    public Action TouchBacketAction;
 
     [SerializeField] private Camera _playerCamera;
     [SerializeField] private Rigidbody _rigidbody;
@@ -44,6 +45,8 @@ public class PlayerController : MonoBehaviour
         {
             TryPickObject();
         }
+
+        CheckBacket();
     }
 
     private void FixedUpdate()
@@ -66,6 +69,15 @@ public class PlayerController : MonoBehaviour
         if (rayCastHit != null && rayCastHit.Value.transform.gameObject.layer == Layers.Gate)
         {
             TouchGagesAction?.Invoke();
+        }
+    }
+
+    private void CheckBacket()
+    {
+        var rayCastHit = RayCast();
+        if (rayCastHit != null && rayCastHit.Value.transform.gameObject.layer == Layers.Backet)
+        {
+            TouchBacketAction?.Invoke();
         }
     }
 

@@ -19,8 +19,6 @@ namespace Assets.Scripts
         private void Awake()
         {
             _inventoryObjects = GetComponentsInChildren<InventoryObject>().ToList();
-
-            Debug.Log("xxx InventoryController " + _inventoryObjects.Count);
         }
 
         public void Pick()

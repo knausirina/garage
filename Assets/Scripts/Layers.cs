@@ -7,5 +7,6 @@ namespace Assets.Scripts
     {
         public const int Gate = 6;
         public const int Rack = 7;
+        public const int Backet = 8;
     }
 }
