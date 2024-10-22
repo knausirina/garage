@@ -21,19 +21,18 @@ namespace Assets.Scripts
             _inventoryObjects = GetComponentsInChildren<InventoryObject>().ToList();
         }
 
-        public void Pick()
+        public void Pick(InventoryObject inventoryObject)
         {
             if (IsFull())
             {
                 return;
             }
 
-            var element =_inventoryObjects.First();
-            _inventoryObjects.Remove(element);
+            var index = _inventoryObjects.IndexOf(inventoryObject);
+            _inventoryObjects.Remove(inventoryObject);
+            _pickedObjects.Add(inventoryObject);
 
-            _pickedObjects.Add(element);
-
-            AddedToInventoryAction?.Invoke(element);
+            AddedToInventoryAction?.Invoke(inventoryObject);
         }
 
         public InventoryObject RemovePicketObject()

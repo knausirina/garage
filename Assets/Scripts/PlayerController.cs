@@ -8,7 +8,7 @@ using static UnityEngine.UI.Image;
 public class PlayerController : MonoBehaviour
 {
     public Action TouchGagesAction;
-    public Action PickObjectAction;
+    public Action<InventoryObject> PickObjectAction;
     public Action TouchBacketAction;
 
     [SerializeField] private Camera _playerCamera;
@@ -82,23 +82,18 @@ public class PlayerController : MonoBehaviour
     private void TryPickObject()
     {
         var rayCastHit = RayCast();
-        if (rayCastHit != null && rayCastHit.Value.transform.gameObject.layer == Layers.Rack)
+        if (rayCastHit != null && rayCastHit.Value.transform.gameObject.layer == Layers.Inventory)
         {
-            PickObjectAction?.Invoke();
+            var inventoryObject = rayCastHit.Value.transform.gameObject.GetComponent<InventoryObject>();
+            PickObjectAction?.Invoke(inventoryObject);
         }
     }
 
     private RaycastHit? RayCast()
     {
-        var origin = new Vector3(transform.position.x, transform.position.y - (transform.localScale.y * .5f),
-            transform.position.z);
-        var direction = transform.TransformDirection(Vector3.forward);
-
-
-        if (Physics.Raycast(origin, direction, out RaycastHit hit, _distance))
+        Ray ray = _playerCamera.ScreenPointToRay(Input.mousePosition);
+        if (Physics.Raycast(ray, out RaycastHit hit, _distance))
         {
-            Debug.DrawRay(origin, direction * _distance, Color.red);
-
             return hit;
         }
 

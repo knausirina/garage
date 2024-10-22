@@ -31,9 +31,9 @@ namespace Assets.Scripts
             _gatesController.OpenGates();
         }
 
-        private void OnPickObjectAction()
+        private void OnPickObjectAction(InventoryObject inventoryObject)
         {
-            _inventoryController.Pick();
+            _inventoryController.Pick(inventoryObject);
         }
 
         private void OnTouchBacketAction()
@@ -48,7 +48,7 @@ namespace Assets.Scripts
 
                 inventoryObject.transform.position = _backet.Point.position;
                 inventoryObject.transform.parent = _backet.transform;
-                var collider = inventoryObject.GetComponent<MeshCollider>();
+                var collider = inventoryObject.GetComponent<BoxCollider>();
                 collider.enabled = true;
                 inventoryObject.gameObject.AddComponent<Rigidbody>();
             }
