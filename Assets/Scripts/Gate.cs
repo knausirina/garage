@@ -5,12 +5,20 @@ using UnityEngine;
 
 public class Gate : MonoBehaviour
 {
-    public Action OpenAction;
+    [SerializeField] private string _animationName;
 
-    private void OnTriggerEnter(Collider other)
+    private Animator _animator;
+    private bool _isOpened;
+    public bool IsOpened => _isOpened;
+
+    private void Awake()
     {
-        Debug.Log("xxx OnTriggerEnter " + other);
+        _animator = GetComponent<Animator>();
+    }
 
-        OpenAction?.Invoke();
+    public void Open()
+    {
+        _isOpened = true;
+        _animator.Play(_animationName);
     }
 }

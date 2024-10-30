@@ -19,7 +19,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField]  public float _maxLookAngle = 180f;
     [SerializeField]  private float _walkSpeed = 5f;
     [SerializeField]  private float _maxVelocityChange = 10f;
-    [SerializeField]  private float _distance = 5.75f;
+    [SerializeField]  private float _distance = 1.75f;
 
     private float pitch = 0.0f;
 

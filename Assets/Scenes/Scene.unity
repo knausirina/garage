@@ -499,7 +499,6 @@ MonoBehaviour:
   _walkSpeed: 5
   _maxVelocityChange: 10
   _distance: 5.75
-  shift: 0
 --- !u!1 &184379821
 GameObject:
   m_ObjectHideFlags: 0
@@ -581,8 +580,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bde296f0ebc32d644bfca7693b0b26e0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _gateLeft: {fileID: 1839155335}
-  _gateRight: {fileID: 1994256236}
+  _gates:
+  - {fileID: 1839155335}
+  - {fileID: 1994256236}
 --- !u!1001 &370112453
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2701,8 +2701,9 @@ GameObject:
   - component: {fileID: 1839155332}
   - component: {fileID: 1839155331}
   - component: {fileID: 1839155335}
+  - component: {fileID: 1839155336}
   m_Layer: 6
-  m_Name: Gate
+  m_Name: RightGate
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2806,6 +2807,28 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d9860de81ba87dc438fa04e31587c2c9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _animationName: OpenRightGateAnimation
+--- !u!95 &1839155336
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1839155330}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 8932b7786d2e9be409ba3eb9f491364e, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &1925841751
 GameObject:
   m_ObjectHideFlags: 0
@@ -2924,8 +2947,9 @@ GameObject:
   - component: {fileID: 1994256233}
   - component: {fileID: 1994256236}
   - component: {fileID: 1994256237}
+  - component: {fileID: 1994256238}
   m_Layer: 6
-  m_Name: Gate (1)
+  m_Name: LeftGate
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3008,6 +3032,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d9860de81ba87dc438fa04e31587c2c9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _animationName: OpenLeftGateAnimation
 --- !u!65 &1994256237
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -3029,6 +3054,27 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1, y: 0.99999994, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!95 &1994256238
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1994256231}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 5dc5b0555bdd16b40af7c075a311b214, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &2063083365 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 7057148730491291160, guid: 1a11f407a7ad0b44b9d99caa5ea0ca27, type: 3}
