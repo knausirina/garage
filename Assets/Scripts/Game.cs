@@ -1,65 +1,56 @@
-﻿using System.Collections;
-using Unity.VisualScripting;
-using UnityEngine;
-using static UnityEngine.UI.Image;
+﻿using UnityEngine;
 
-namespace Assets.Scripts
+public class Game : MonoBehaviour
 {
-    public class Game: MonoBehaviour
+    [SerializeField] private PlayerController _playerController;
+    [SerializeField] private GatesController _gatesController;
+    [SerializeField] private InventoryController _inventoryController;
+    [SerializeField] private Basket _basket;
+
+    private void Awake()
     {
-        [SerializeField] private PlayerController _playerController;
-        [SerializeField] private GatesController _gatesController;
-        [SerializeField] private InventoryController _inventoryController;
-        [SerializeField] private Backet _backet;
+        _playerController.TouchGagesAction += OnTouchGagesAction;
+        _playerController.PickObjectAction += OnPickObjectAction;
+        _playerController.TouchBasketAction += OnTouchBasketAction;
 
-        private void Awake()
+        _inventoryController.AddedToInventoryAction += OnAddToInventoryAction;
+    }
+
+    private void OnAddToInventoryAction(InventoryObject inventoryObject)
+    {
+        _playerController.AddInventoryObject(inventoryObject);
+    }
+
+    private void OnTouchGagesAction()
+    {
+        _gatesController.OpenGates();
+    }
+
+    private void OnPickObjectAction(InventoryObject inventoryObject)
+    {
+        _inventoryController.Pick(inventoryObject);
+    }
+
+    private void OnTouchBasketAction()
+    {
+        var inventoryObject = _inventoryController.RemovePicketObject();
+        if (inventoryObject == null)
         {
-            _playerController.TouchGagesAction += OnTouchGagesAction;
-            _playerController.PickObjectAction += OnPickObjectAction;
-            _playerController.TouchBacketAction += OnTouchBacketAction;
-
-            _inventoryController.AddedToInventoryAction += OnAddToInventoryAction;
+            return;
         }
 
-        private void OnAddToInventoryAction(InventoryObject inventoryObject)
-        {
-            _playerController.AddInventoryObject(inventoryObject);
-        }
+        inventoryObject.transform.position = _basket.Point.position;
+        inventoryObject.transform.parent = _basket.transform;
+        var collider = inventoryObject.GetComponent<BoxCollider>();
+        collider.enabled = true;
+        inventoryObject.gameObject.AddComponent<Rigidbody>();
+    }
 
-        private void OnTouchGagesAction()
-        {
-            _gatesController.OpenGates();
-        }
-
-        private void OnPickObjectAction(InventoryObject inventoryObject)
-        {
-            _inventoryController.Pick(inventoryObject);
-        }
-
-        private void OnTouchBacketAction()
-        {
-            if (Input.GetKeyDown(KeyCode.G))
-            {
-                var inventoryObject = _inventoryController.RemovePicketObject();
-                if (inventoryObject == null)
-                {
-                    return;
-                }
-
-                inventoryObject.transform.position = _backet.Point.position;
-                inventoryObject.transform.parent = _backet.transform;
-                var collider = inventoryObject.GetComponent<BoxCollider>();
-                collider.enabled = true;
-                inventoryObject.gameObject.AddComponent<Rigidbody>();
-            }
-        }
-
-        private void OnDestroy()
-        {
-            _playerController.TouchGagesAction -= OnTouchGagesAction;
-            _playerController.PickObjectAction -= OnPickObjectAction;
-            _inventoryController.AddedToInventoryAction -= OnAddToInventoryAction;
-            _inventoryController.AddedToInventoryAction -= OnAddToInventoryAction;
-        }
+    private void OnDestroy()
+    {
+        _playerController.TouchGagesAction -= OnTouchGagesAction;
+        _playerController.PickObjectAction -= OnPickObjectAction;
+        _inventoryController.AddedToInventoryAction -= OnAddToInventoryAction;
+        _inventoryController.AddedToInventoryAction -= OnAddToInventoryAction;
     }
 }
