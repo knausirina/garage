@@ -573,14 +573,14 @@ MonoBehaviour:
   _eventSystem: {fileID: 643095557}
   _mouseSensitivity: 2
   _maxLookAngle: 180
-  _walkSpeed: 10
-  _maxVelocityChange: 10
+  _walkSpeed: 6
+  _maxVelocityChange: 8
   _distance: 5.75
-  m_BottomClamp: 90
-  m_TopClamp: 90
+  _bottomClampRotate: 90
+  _topClampRotate: 90
   _touchLimit: 10
-  _rotateSpeedX: 5
-  _rotateSpeedY: 5
+  _rotateSpeedX: 2
+  _rotateSpeedY: 0.5
 --- !u!54 &161580582
 Rigidbody:
   m_ObjectHideFlags: 0

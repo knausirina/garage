@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-
 public class PlayerController : MonoBehaviour
 {
     public Action TouchGagesAction;
@@ -17,20 +16,20 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private EventSystem _eventSystem;
 
     private Vector2 _rotateDelta = Vector2.zero;
-    private float m_HorizontalRot = 0;
-    private float m_VerticalRot = 0;
-    private List<string> _availableTouchesId = new List<string>();
+    private float _horizontalRotation = 0;
+    private float _verticalRotation = 0;
+    private List<string> _availableTouchesId = new();
 
     [SerializeField] private float _mouseSensitivity = 2f;
     [SerializeField] private float _maxLookAngle = 180f;
     [SerializeField] private float _walkSpeed = 5f;
     [SerializeField] private float _maxVelocityChange = 10f;
     [SerializeField] private float _distance = 1.75f;
-    [SerializeField] private float m_BottomClamp = 90f;
-    [SerializeField] private float m_TopClamp = 90f;
+    [SerializeField] private float _bottomClampRotate = 90f;
+    [SerializeField] private float _topClampRotate = 90f;
     [SerializeField] private int _touchLimit = 10;
-    [SerializeField] private float _rotateSpeedX = 5;
-    [SerializeField] private float _rotateSpeedY = 2;
+    [SerializeField] private float _rotateSpeedX = 2;
+    [SerializeField] private float _rotateSpeedY = 1;
 
 
     public void AddInventoryObject(InventoryObject inventoryObject)
@@ -41,7 +40,7 @@ public class PlayerController : MonoBehaviour
 
     private void Update()
     {
-        CalcRotate();
+        CalculateRotation();
 
         CheckGates();
 
@@ -50,7 +49,7 @@ public class PlayerController : MonoBehaviour
         CheckBasket();
     }
 
-    private void CalcRotate()
+    private void CalculateRotation()
     {
         if (Input.touchCount != 0)
         {
@@ -78,12 +77,12 @@ public class PlayerController : MonoBehaviour
     {
         if (_rotateDelta == Vector2.zero)
             return;
-        m_HorizontalRot = _rotateDelta.x * _rotateSpeedX * Time.deltaTime;
-        m_VerticalRot += _rotateDelta.y * _rotateSpeedY * Time.deltaTime;
-        m_VerticalRot = Mathf.Clamp(m_VerticalRot, -m_BottomClamp, m_TopClamp);
+        _horizontalRotation = _rotateDelta.x * _rotateSpeedX * Time.deltaTime;
+        _verticalRotation += _rotateDelta.y * _rotateSpeedY * Time.deltaTime;
+        _verticalRotation = Mathf.Clamp(_verticalRotation, -_bottomClampRotate, _topClampRotate);
 
-        _playerCamera.transform.localRotation = Quaternion.Euler(m_VerticalRot, 0.0f, 0.0f);
-        transform.Rotate(Vector3.up * m_HorizontalRot);
+        _playerCamera.transform.localRotation = Quaternion.Euler(_verticalRotation, 0.0f, 0.0f);
+        transform.Rotate(Vector3.up * _horizontalRotation);
 
         _rotateDelta = Vector2.zero;
     }
